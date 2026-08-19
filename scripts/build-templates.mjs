@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 const outputDirectory = join(projectRoot, 'dist');
 const templatesDirectory = join(projectRoot, 'templates');
+const ignoredFileNames = new Set(['.DS_Store', 'Thumbs.db', 'desktop.ini']);
+const ignoredDirectoryNames = new Set(['.git', 'node_modules']);
 
 // 发现每个模板目录，新增模板后无需修改构建脚本
 const templateDirectories = (await readdir(templatesDirectory, { withFileTypes: true }))
@@ -18,6 +20,18 @@ if (templateDirectories.length === 0) {
 }
 
 // 递归读取目录中的源文件
+function isIgnoredEntry(name, isDirectory = false) {
+  if (name.startsWith('.')) {
+    return true;
+  }
+
+  if (isDirectory && ignoredDirectoryNames.has(name)) {
+    return true;
+  }
+
+  return ignoredFileNames.has(name);
+}
+
 async function readSourceFiles(sourceDirectory) {
   const entries = (await readdir(sourceDirectory, { withFileTypes: true })).sort((left, right) =>
     left.name.localeCompare(right.name),
@@ -25,6 +39,10 @@ async function readSourceFiles(sourceDirectory) {
   const files = await Promise.all(
     entries.map(async (entry) => {
       const entryPath = join(sourceDirectory, entry.name);
+
+      if (isIgnoredEntry(entry.name, entry.isDirectory())) {
+        return [];
+      }
 
       if (entry.isDirectory()) {
         const nestedFiles = await readSourceFiles(entryPath);
@@ -42,14 +60,13 @@ async function readSourceFiles(sourceDirectory) {
   return files.flat();
 }
 
-// 读取每个模板 src 目录中的全部源码，组装为 CLI 可直接提交的文件映射
+// 读取每个模板目录中的全部源码，组装为 CLI 可直接提交的文件映射
 const artifacts = await Promise.all(
   templateDirectories.map(async (directory) => {
     const templateDirectory = join(templatesDirectory, directory);
-    const sourceDirectory = join(templateDirectory, 'src');
     const files = Object.fromEntries(
-      (await readSourceFiles(sourceDirectory)).map(([filePath, content]) => [
-        `src/${filePath.split(sep).join('/')}`,
+      (await readSourceFiles(templateDirectory)).map(([filePath, content]) => [
+        `${filePath.split(sep).join('/')}`,
         content,
       ]),
     );

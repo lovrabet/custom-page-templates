@@ -38,12 +38,12 @@ workspace/src/pages/dashboard/
 [`templates/blank`](./templates/blank) 是基础自定义页面模板：
 
 ```text
-src/app/index.jsx
-src/app/index.css
-src/locales/index.js
+app/index.jsx
+app/index.css
+locales/index.js
 ```
 
-模板目录名即模板 ID，`src/` 下的全部文件都会作为原始页面源码写入构建产物。预览工程通过别名模拟模板所需的上下文，不修改模板代码。
+模板目录名即模板 ID，全部文件都会作为原始页面源码写入构建产物。预览工程通过别名模拟模板所需的上下文，不修改模板代码。
 
 ## 构建产物
 

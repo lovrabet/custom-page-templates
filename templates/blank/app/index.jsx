@@ -14,7 +14,7 @@ const App = () => {
 
   return (
     <div className="page-container">
-      <Card>{$i18n.t('pageDescription', '这是一个基础页面模板，你可以在此基础上进行开发')}</Card>
+      <Card>{$i18n.t('pageDescription')}</Card>
     </div>
   );
 };
