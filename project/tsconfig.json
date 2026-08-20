@@ -13,9 +13,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@/context/app-context": ["./src/app-context.tsx"],
-      "@/*": ["./src/*"]
+      "@/context/app-context": ["./app-context.tsx"],
+      "@/*": ["./*", "./pages/*"]
     }
   },
-  "include": ["src"]
+  "include": ["preview.tsx", "app-context.tsx", "const.ts", "pages"]
 }

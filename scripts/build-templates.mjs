@@ -60,13 +60,13 @@ async function readSourceFiles(sourceDirectory) {
   return files.flat();
 }
 
-// 读取每个模板目录中的全部源码，组装为 CLI 可直接提交的文件映射
+// 读取每个模板目录中的全部源码，组装为 CLI 可直接提交到页面 src 目录的文件映射
 const artifacts = await Promise.all(
   templateDirectories.map(async (directory) => {
     const templateDirectory = join(templatesDirectory, directory);
     const files = Object.fromEntries(
       (await readSourceFiles(templateDirectory)).map(([filePath, content]) => [
-        `${filePath.split(sep).join('/')}`,
+        `src/${filePath.split(sep).join('/')}`,
         content,
       ]),
     );

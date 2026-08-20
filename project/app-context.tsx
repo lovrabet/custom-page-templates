@@ -1,6 +1,11 @@
 import { createContext, useContext, useMemo } from 'react';
 import type { PropsWithChildren } from 'react';
+import { createClient } from '@lovrabet/sdk';
+import type { LovrabetClient } from '@lovrabet/sdk';
 import { useLocation, useNavigate } from 'react-router';
+import appCode from './const';
+
+type LocaleMap = Record<string, Record<string, string>>;
 
 /**
  * 创建轻量级 i18n 实例
@@ -9,7 +14,7 @@ import { useLocation, useNavigate } from 'react-router';
  * @returns 包含 t 与 addLocale 的 mock i18n 对象
  */
 const createI18n = () => {
-  let locales: Record<string, Record<string, string>> = {};
+  let locales: LocaleMap = {};
 
   return {
     /**
@@ -28,16 +33,28 @@ const createI18n = () => {
      * @param nextLocales 即将注入的语言资源
      * @returns 合并后的语言资源
      */
-    addLocale: (nextLocales: Record<string, Record<string, string>>) => {
+    addLocale: (nextLocales: LocaleMap) => {
       locales = { ...locales, ...nextLocales };
       return locales;
     },
   };
 };
 
+/**
+ * 创建 SDK 客户端
+ * 使用初始化时写入的应用编码，使页面请求与平台运行时保持一致
+ *
+ * @returns 已初始化的 Lovrabet SDK 客户端
+ */
+const createSdkClient = (): LovrabetClient =>
+  createClient({
+    appCode,
+    models: {},
+  });
+
 type AppContextValue = {
   i18n: ReturnType<typeof createI18n>;
-  sdkClient: null;
+  sdkClient: LovrabetClient;
 };
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -52,7 +69,7 @@ export const AppContextProvider = ({ children }: PropsWithChildren) => {
   const value = useMemo(
     () => ({
       i18n: createI18n(),
-      sdkClient: null,
+      sdkClient: createSdkClient(),
     }),
     [],
   );

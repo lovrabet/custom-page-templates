@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@lovrabet/sdk": "^1.3.7",
     "antd": "^5.26.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

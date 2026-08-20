@@ -3,11 +3,10 @@
 此仓库将本地预览工程与页面模板源码分离维护。
 
 ```text
-workspace/                   本地 Vite 预览工程
-workspace/src/index.tsx      本地预览挂载入口
-workspace/src/preview.tsx    页面收集和预览渲染
-workspace/src/app-context.tsx 平台上下文模拟
-workspace/src/pages/         初始化后存放各页面的实际源码
+project/                    本地 Vite 预览工程
+project/preview.tsx         本地预览挂载、页面收集和渲染
+project/app-context.tsx     平台上下文模拟
+project/pages/         初始化后存放各页面的实际源码
 templates/blank/             BLANK 模板原始页面文件
 scripts/build-templates.mjs  生成模板文件映射
 ```
@@ -21,17 +20,17 @@ bun install
 bun run dev
 ```
 
-启动后打开终端输出的地址即可预览 `workspace/src/pages/` 中的实际页面。目录为空时会显示初始化提示。`workspace/` 仅用于本地运行，不会成为模板产物的一部分。
+启动后打开终端输出的地址即可预览 `project/pages/` 中的实际页面。目录为空时会显示初始化提示。`project/` 仅用于本地运行，不会成为模板产物的一部分。
 
-`workspace/src/pages/` 下的每个一级目录代表一个页面，目录名即页面 ID。每个页面目录的 `index` 文件是唯一入口：
+`project/pages/` 下的每个一级目录代表一个页面，目录名即页面 ID。每个页面目录的 `index` 文件是唯一入口：
 
 ```text
-workspace/src/pages/dashboard/
+project/pages/dashboard/
 ├── index.tsx
 └── components/
 ```
 
-预览环境会自动加载全部 `index` 入口，使用 `?page=<页面 ID>` 切换，未指定时默认预览按页面 ID 排序后的第一个页面。页面导入 `@/context/app-context` 时，Vite 会自动解析为 `workspace/src/app-context.tsx` 提供的全局模拟上下文，无需修改页面或入口代码。Vite 会自动热更新预览。
+预览环境会自动加载全部 `index` 入口，使用 `?page=<页面 ID>` 切换，未指定时默认预览按页面 ID 排序后的第一个页面。页面导入 `@/context/app-context` 时，Vite 会自动解析为 `project/app-context.tsx` 提供的全局模拟上下文，无需修改页面或入口代码。Vite 会自动热更新预览。
 
 ## 模板结构
 
