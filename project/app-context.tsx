@@ -1,9 +1,9 @@
-import { createContext, useContext, useMemo } from 'react';
-import type { PropsWithChildren } from 'react';
-import { createClient } from '@lovrabet/sdk';
-import type { LovrabetClient } from '@lovrabet/sdk';
-import { useLocation, useNavigate } from 'react-router';
-import appCode from './const';
+import { createContext, useContext, useMemo } from "react";
+import type { PropsWithChildren } from "react";
+import { createClient } from "@lovrabet/sdk";
+import type { LovrabetClient } from "@lovrabet/sdk";
+import { useLocation, useNavigate } from "react-router";
+import appCode from "./const";
 
 type LocaleMap = Record<string, Record<string, string>>;
 
@@ -25,7 +25,8 @@ const createI18n = () => {
      * @param fallback 备用文案
      * @returns 文案结果
      */
-    t: (key: string, fallback = '') => locales['zh-CN']?.[key] || fallback || key,
+    t: (key: string, fallback = "") =>
+      locales["zh-CN"]?.[key] || fallback || key,
     /**
      * 合并新增语言包
      * 支持运行时动态挂载国际化配置
@@ -87,7 +88,7 @@ const useAppContext = () => {
   const context = useContext(AppContext);
 
   if (!context) {
-    throw new Error('Preview context was not found.');
+    throw new Error("Preview context was not found.");
   }
 
   return context;
@@ -104,5 +105,11 @@ export const useI18n = () => useAppContext().i18n;
  * 与原模板中 useSdkClient 的消费方式对齐
  */
 export const useSdkClient = () => useAppContext().sdkClient;
+
+/**
+ * 暴露 mock 主题 Hook 供页面代码使用
+ * 本地预览未配置主题时返回 undefined
+ */
+export const useAppTheme = () => undefined;
 
 export { useLocation, useNavigate };

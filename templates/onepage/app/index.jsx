@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Card, ConfigProvider, Select, Tag, Typography } from "antd";
 import {
+  useAppTheme,
   useI18n,
   useLocation,
   useNavigate,
@@ -492,6 +493,7 @@ const OnePage = () => {
   const $i18n = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
+  const theme = useAppTheme();
 
   $i18n.addLocale(locales);
 
