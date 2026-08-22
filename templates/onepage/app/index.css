@@ -1,9 +1,5 @@
 .crm-page {
-  --crm-primary-color: var(--ant-color-primary);
-  --crm-primary-background: var(--ant-color-primary-bg);
-
   display: flex;
-  flex-wrap: wrap;
   gap: 16px;
   min-width: 1180px;
   min-height: 100vh;
@@ -151,7 +147,7 @@
   overflow-wrap: anywhere;
 }
 .crm-info-link {
-  color: var(--crm-primary-color);
+  color: var(--ant-color-primary);
   text-decoration: underline;
 }
 .crm-record-panel > .ant-card-body,
@@ -168,8 +164,8 @@
 }
 .crm-record-card.is-selected,
 .crm-note-card.is-active {
-  border-color: var(--crm-primary-color);
-  background: var(--crm-primary-background);
+  border-color: var(--ant-color-primary);
+  background: var(--ant-color-primary-bg);
 }
 .crm-record-card__top,
 .crm-record-card__bottom,
@@ -221,7 +217,7 @@
 .crm-stage-bar span {
   padding: 10px 6px;
   color: #3e4550;
-  background: var(--crm-primary-background);
+  background: var(--ant-color-primary-bg);
   text-align: center;
 }
 .crm-stage-bar span + span {
@@ -229,7 +225,7 @@
 }
 .crm-stage-bar .is-current {
   color: #fff;
-  background: var(--crm-primary-color);
+  background: var(--ant-color-primary);
   font-weight: 600;
 }
 .crm-info-list--two-column {
