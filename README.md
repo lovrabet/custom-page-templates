@@ -8,6 +8,7 @@ project/preview.tsx         本地预览挂载、页面收集和渲染
 project/app-context.tsx     平台上下文模拟
 project/pages/         初始化后存放各页面的实际源码
 templates/blank/             BLANK 模板原始页面文件
+templates/onepage/           单页框架模板原始页面文件
 scripts/build-templates.mjs  生成模板文件映射
 ```
 
@@ -34,7 +35,7 @@ project/pages/dashboard/
 
 ## 模板结构
 
-[`templates/blank`](./templates/blank) 是基础自定义页面模板：
+[`templates/blank`](./templates/blank) 是基础自定义页面模板，[`templates/onepage`](./templates/onepage) 提供了包含页面头部、概览区和主内容区的单页框架：
 
 ```text
 app/index.jsx
@@ -50,4 +51,4 @@ locales/index.js
 bun run build
 ```
 
-构建后会为每个模板生成 `dist/<模板 id>.json`，其内容是模板全部源码的文件映射。当前产物为 `dist/blank.json`。
+构建后会为每个模板生成 `dist/<模板 id>.json`，其内容是模板全部源码的文件映射。当前产物包括 `dist/blank.json` 与 `dist/onepage.json`。
